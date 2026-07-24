@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BookOpen, FileText, Image as ImageIcon, Search, Download } from "lucide-react";
-import api, { roomBookingAPI } from "../api";
+import api, { roomBookingAPI } from "../../api";
 import Swal from "sweetalert2";
-import { showError, showAlert, getSwalConfig } from "../utils/alerts";
-import PremiumRoomInvoice from "../components/PremiumRoomInvoice";
+import { showError, showAlert, getSwalConfig } from "../../utils/alerts";
+import PremiumRoomInvoice from "../../components/PremiumRoomInvoice";
 
 export default function AdminRoomReports() {
   const [bookings, setBookings] = useState([]);

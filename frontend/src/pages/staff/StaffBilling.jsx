@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
-import PremiumInvoice from "../components/PremiumInvoice";
+import api from "../../api";
+import PremiumInvoice from "../../components/PremiumInvoice";
 import { ShoppingBag, Search, ShoppingCart, UserCheck, Plus, Minus, Trash2, ArrowUpRight } from "lucide-react";
-import { showError } from "../utils/alerts";
+import { showError } from "../../utils/alerts";
 
 export default function StaffBilling() {
   const [dishes, setDishes] = useState([]);
@@ -157,7 +157,7 @@ export default function StaffBilling() {
 
       if (res.data.success) {
         if (billType === "Room") {
-          import("../utils/alerts").then(({ showSuccess }) => {
+          import("../../utils/alerts").then(({ showSuccess }) => {
             showSuccess("Added to Room", "Restaurant bill successfully added to the room tab.");
           });
         } else {
@@ -215,7 +215,7 @@ export default function StaffBilling() {
               placeholder="Search dishes..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-slate-900/60 border border-slate-800 text-slate-100 rounded-xl py-2.5 pl-10 pr-4 text-xs outline-none focus:border-amber-500/60"
+              className="w-full bg-white dark:bg-slate-900/60 border border-slate-300 dark:border-slate-800 text-slate-800 dark:text-slate-100 rounded-xl py-2.5 pl-10 pr-4 text-xs outline-none focus:border-amber-500/60"
             />
           </div>
 
@@ -227,7 +227,7 @@ export default function StaffBilling() {
                 className={`px-4 py-2 text-xs font-semibold rounded-xl whitespace-nowrap transition-all ${
                   selectedCategory === cat
                     ? "bg-gradient-to-r from-amber-600 to-yellow-500 text-slate-950 shadow-md shadow-amber-600/10"
-                    : "bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-slate-250 hover:bg-slate-850"
+                    : "bg-slate-200/80 dark:bg-slate-900/80 border border-slate-300 dark:border-slate-800 text-slate-700 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-800"
                 }`}
               >
                 {cat}
@@ -266,7 +266,7 @@ export default function StaffBilling() {
                       {dish.category}
                     </p>
                   </div>
-                  <button className="w-full mt-auto py-1.5 bg-slate-900 border border-slate-800 hover:border-amber-500/20 group-hover:bg-amber-600/10 group-hover:text-amber-400 rounded-lg text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all">
+                  <button className="w-full mt-auto py-1.5 bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:border-amber-500/20 group-hover:bg-amber-500/10 group-hover:text-amber-500 rounded-lg text-[10px] font-bold uppercase tracking-wider flex items-center justify-center gap-1 transition-all">
                     <span>Add to Cart</span>
                     <ArrowUpRight className="w-3 h-3" />
                   </button>

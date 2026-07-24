@@ -11,18 +11,20 @@ import Pricing from "./pages/Landing/Pricing";
 import About from "./pages/Landing/About";
 import Contact from "./pages/Landing/Contact";
 import Login from "./pages/Login";
-import StaffBilling from "./pages/StaffBilling";
-import AdminDashboard from "./pages/AdminDashboard";
-import AdminStaff from "./pages/AdminStaff";
-import AdminDishes from "./pages/AdminDishes";
-import AdminReports from "./pages/AdminReports";
-import AdminRooms from "./pages/AdminRooms";
-import AdminRoomReports from "./pages/AdminRoomReports";
-import AdminTables from "./pages/AdminTables";
-import StaffRoomBooking from "./pages/StaffRoomBooking";
-import StaffKotBilling from "./pages/StaffKotBilling";
-import StaffGRC from "./pages/StaffGRC";
+import StaffBilling from "./pages/staff/StaffBilling";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminStaff from "./pages/admin/AdminStaff";
+import AdminDishes from "./pages/admin/AdminDishes";
+import AdminReports from "./pages/admin/AdminReports";
+import AdminRooms from "./pages/admin/AdminRooms";
+import AdminRoomReports from "./pages/admin/AdminRoomReports";
+import AdminTables from "./pages/admin/AdminTables";
+import StaffRoomBooking from "./pages/staff/StaffRoomBooking";
+import StaffKotBilling from "./pages/staff/StaffKotBilling";
+import StaffGRC from "./pages/staff/StaffGRC";
 import AdvanceBookings from "./pages/AdvanceBookings";
+import AdminSettings from "./pages/admin/AdminSettings";
+import AdminBilling from "./pages/admin/AdminBilling";
 
 // Guard for Admin Routes
 const AdminRoute = ({ children, currentUser, handleLogout, theme, toggleTheme }) => {
@@ -103,6 +105,15 @@ export default function App() {
       }
     }
     setLoading(false);
+
+    const handleUserUpdated = () => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setCurrentUser(JSON.parse(storedUser));
+      }
+    };
+    window.addEventListener("user-updated", handleUserUpdated);
+    return () => window.removeEventListener("user-updated", handleUserUpdated);
   }, []);
 
   const handleLoginSuccess = (user) => {
@@ -207,6 +218,26 @@ export default function App() {
           element={
             <AdminRoute currentUser={currentUser} handleLogout={handleLogout} theme={theme} toggleTheme={toggleTheme}>
               <AdvanceBookings />
+            </AdminRoute>
+          }
+        />
+
+        {/* Admin Settings Route */}
+        <Route
+          path="/admin/settings"
+          element={
+            <AdminRoute currentUser={currentUser} handleLogout={handleLogout} theme={theme} toggleTheme={toggleTheme}>
+              <AdminSettings />
+            </AdminRoute>
+          }
+        />
+
+        {/* Admin Billing Route */}
+        <Route
+          path="/admin/billing"
+          element={
+            <AdminRoute currentUser={currentUser} handleLogout={handleLogout} theme={theme} toggleTheme={toggleTheme}>
+              <AdminBilling />
             </AdminRoute>
           }
         />

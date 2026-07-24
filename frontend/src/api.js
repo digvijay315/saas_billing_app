@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/",
-  // baseURL:"https://hotelshankarpalace.onrender.com/"
+  // baseURL: "http://localhost:5000/",
+  baseURL:"https://hotelshankarpalace.onrender.com/"
 });
 
 let activeRequests = 0;
@@ -144,6 +144,12 @@ export const orderAPI = {
 
 export const roomBookingAPI = {
   exportBookings: (params) => api.get("/api/room-bookings/export", { params, responseType: 'blob' }),
+};
+
+export const authAPI = {
+  updatePassword: (data) => api.put("/api/auth/update-password", data),
+  updateStaffPermissions: (data) => api.put("/api/auth/update-staff-permissions", data),
+  updateSubscription: (data) => api.put("/api/auth/subscription", data),
 };
 
 export default api;

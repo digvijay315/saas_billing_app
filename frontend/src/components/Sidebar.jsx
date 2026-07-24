@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { LayoutDashboard, Users, UtensilsCrossed, FileText, BedDouble, BookOpen } from "lucide-react";
+import { LayoutDashboard, Users, UtensilsCrossed, FileText, BedDouble, BookOpen, Settings, CreditCard } from "lucide-react";
 
 export default function Sidebar({ isOpen, closeSidebar }) {
   const location = useLocation();
@@ -45,6 +45,16 @@ export default function Sidebar({ isOpen, closeSidebar }) {
       name: "Manage Tables",
       path: "/admin/tables",
       icon: UtensilsCrossed,
+    },
+    {
+      name: "Settings",
+      path: "/admin/settings",
+      icon: Settings,
+    },
+    {
+      name: "Subscription",
+      path: "/admin/billing",
+      icon: CreditCard,
     },
   ];
 

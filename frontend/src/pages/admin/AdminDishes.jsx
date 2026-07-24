@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
+import api from "../../api";
 import { PlusCircle, Utensils, Trash2, Image, ToggleLeft, ToggleRight, Sparkles, Loader2 } from "lucide-react";
-import { showError, showConfirm } from "../utils/alerts";
+import { showError, showConfirm } from "../../utils/alerts";
 
 export default function AdminDishes() {
   const [dishes, setDishes] = useState([]);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import api, { tableAPI, orderAPI } from "../api";
+import api, { tableAPI, orderAPI } from "../../api";
 import { UtensilsCrossed, Users, Plus, Minus, Trash2, Search, ArrowUpRight, ArrowLeft } from "lucide-react";
-import { showError, showSuccess } from "../utils/alerts";
-import ThermalReceipt from "../components/ThermalReceipt";
+import { showError, showSuccess } from "../../utils/alerts";
+import ThermalReceipt from "../../components/ThermalReceipt";
 
 export default function StaffKotBilling() {
   const [tables, setTables] = useState([]);

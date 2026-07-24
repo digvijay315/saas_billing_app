@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
-import PrintableGRC from "../components/PrintableGRC";
+import api from "../../api";
+import PrintableGRC from "../../components/PrintableGRC";
 import { Printer, RefreshCcw } from "lucide-react";
-import { showSuccess, showError } from "../utils/alerts";
+import { showSuccess, showError } from "../../utils/alerts";
 
 export default function StaffGRC() {
   const [grcNo, setGrcNo] = useState(1);

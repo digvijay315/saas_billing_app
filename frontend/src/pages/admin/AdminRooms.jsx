@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BedDouble, Plus, Edit, Trash2, X } from "lucide-react";
-import api from "../api";
-import { showError, showSuccess, showConfirm, showAlert } from "../utils/alerts";
+import api from "../../api";
+import { showError, showSuccess, showConfirm, showAlert } from "../../utils/alerts";
 
 export default function AdminRooms() {
   const [rooms, setRooms] = useState([]);

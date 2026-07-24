@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
-import PremiumInvoice from "../components/PremiumInvoice";
+import api from "../../api";
+import PremiumInvoice from "../../components/PremiumInvoice";
 import { 
   Eye, Printer, Search, ChevronLeft, ChevronRight, Filter, AlertCircle, FileText
 } from "lucide-react";

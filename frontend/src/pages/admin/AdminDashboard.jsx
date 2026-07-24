@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import api from "../api";
-import PremiumInvoice from "../components/PremiumInvoice";
-import PremiumRoomInvoice from "../components/PremiumRoomInvoice";
+import api from "../../api";
+import PremiumInvoice from "../../components/PremiumInvoice";
+import PremiumRoomInvoice from "../../components/PremiumRoomInvoice";
 import { 
   TrendingUp, Calendar, Clock, Landmark, Eye, Printer, AlertCircle, Building2, Utensils
 } from "lucide-react";

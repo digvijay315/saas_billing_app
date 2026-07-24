@@ -72,9 +72,19 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email }).populate('hotelId', 'name email contact address logo gstNo cinNo');
+    const user = await User.findOne({ email }).populate('hotelId', 'name email contact address logo gstNo cinNo staffPermissions subscriptionPlan subscriptionStatus subscriptionExpiresAt');
 
     if (user && (await user.matchPassword(password))) {
+      // Check subscription for staff members
+      if (user.role === "staff") {
+        if (!user.hotelId || user.hotelId.subscriptionStatus !== "active") {
+          return res.status(403).json({ 
+            success: false, 
+            message: "Subscription inactive! Admin must activate a plan before staff can login." 
+          });
+        }
+      }
+
       res.json({
         success: true,
         token: generateToken(user._id),
@@ -92,6 +102,10 @@ const loginUser = async (req, res) => {
           hotelLogo: user.hotelId ? user.hotelId.logo : "",
           hotelGstNo: user.hotelId ? user.hotelId.gstNo : "",
           hotelCinNo: user.hotelId ? user.hotelId.cinNo : "",
+          staffPermissions: user.hotelId ? user.hotelId.staffPermissions : null,
+          subscriptionPlan: user.hotelId ? user.hotelId.subscriptionPlan : "none",
+          subscriptionStatus: user.hotelId ? user.hotelId.subscriptionStatus : "inactive",
+          subscriptionExpiresAt: user.hotelId ? user.hotelId.subscriptionExpiresAt : null,
         },
       });
     } else {
@@ -178,10 +192,93 @@ const deleteStaff = async (req, res) => {
   }
 };
 
+// @desc    Update admin password
+// @route   PUT /api/auth/update-password
+// @access  Private/Admin
+const updateAdminPassword = async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  
+  try {
+    const user = await User.findById(req.user._id);
+    if (user && (await user.matchPassword(currentPassword))) {
+      user.password = newPassword;
+      await user.save();
+      res.json({ success: true, message: "Password updated successfully" });
+    } else {
+      res.status(401).json({ success: false, message: "Invalid current password" });
+    }
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc    Update staff panel permissions
+// @route   PUT /api/auth/update-staff-permissions
+// @access  Private/Admin
+const updateStaffPermissions = async (req, res) => {
+  const { permissions } = req.body;
+  
+  try {
+    const hotel = await Hotel.findById(req.user.hotelId);
+    if (!hotel) {
+      return res.status(404).json({ success: false, message: "Hotel not found" });
+    }
+    
+    hotel.staffPermissions = permissions;
+    await hotel.save();
+    
+    res.json({ success: true, message: "Staff permissions updated successfully", staffPermissions: hotel.staffPermissions });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc    Update subscription plan
+// @route   PUT /api/auth/subscription
+// @access  Private/Admin
+const updateSubscription = async (req, res) => {
+  const { plan, status } = req.body;
+  
+  try {
+    const hotel = await Hotel.findById(req.user.hotelId);
+    if (!hotel) {
+      return res.status(404).json({ success: false, message: "Hotel not found" });
+    }
+    
+    if (plan) {
+      hotel.subscriptionPlan = plan;
+      if (plan === "premium") {
+        // Set expiry to 28 days from now
+        const expiryDate = new Date();
+        expiryDate.setDate(expiryDate.getDate() + 28);
+        hotel.subscriptionExpiresAt = expiryDate;
+      } else if (plan === "free") {
+        hotel.subscriptionExpiresAt = null;
+      }
+    }
+    if (status) hotel.subscriptionStatus = status;
+    
+    await hotel.save();
+    
+    res.json({ 
+      success: true, 
+      message: "Subscription updated successfully", 
+      subscriptionPlan: hotel.subscriptionPlan,
+      subscriptionStatus: hotel.subscriptionStatus,
+      subscriptionExpiresAt: hotel.subscriptionExpiresAt
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   registerHotel,
   loginUser,
   registerStaff,
   getStaff,
   deleteStaff,
+  updateAdminPassword,
+  updateStaffPermissions,
+  updateSubscription,
 };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { UtensilsCrossed, Plus, Trash2, Users } from "lucide-react";
-import { showSuccess, showError, showConfirm } from "../utils/alerts";
-import { tableAPI } from "../api";
+import { showSuccess, showError, showConfirm } from "../../utils/alerts";
+import { tableAPI } from "../../api";
 
 export default function AdminTables() {
   const [tables, setTables] = useState([]);

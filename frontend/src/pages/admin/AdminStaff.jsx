@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import api from "../api";
+import api from "../../api";
 import { UserPlus, Users, Trash2, Mail, Phone, MapPin, User, ShieldAlert } from "lucide-react";
-import { showError, showConfirm } from "../utils/alerts";
+import { showError, showConfirm } from "../../utils/alerts";
 
 export default function AdminStaff() {
   const [staffList, setStaffList] = useState([]);

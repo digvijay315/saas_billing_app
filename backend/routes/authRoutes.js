@@ -6,6 +6,9 @@ const {
   registerStaff,
   getStaff,
   deleteStaff,
+  updateAdminPassword,
+  updateStaffPermissions,
+  updateSubscription,
 } = require("../controllers/authController");
 const { protect, admin } = require("../middleware/auth");
 
@@ -14,5 +17,8 @@ router.post("/login", loginUser);
 router.post("/register-staff", protect, admin, registerStaff);
 router.get("/staff", protect, admin, getStaff);
 router.delete("/staff/:id", protect, admin, deleteStaff);
+router.put("/update-password", protect, admin, updateAdminPassword);
+router.put("/update-staff-permissions", protect, admin, updateStaffPermissions);
+router.put("/subscription", protect, admin, updateSubscription);
 
 module.exports = router;

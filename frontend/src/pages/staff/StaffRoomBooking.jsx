@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import Webcam from "react-webcam";
 import { BedDouble, CheckCircle, UploadCloud, FileText, Camera } from "lucide-react";
-import api from "../api";
-import { showError, showSuccess, showAlert } from "../utils/alerts";
-import PremiumRoomInvoice from "../components/PremiumRoomInvoice";
+import api from "../../api";
+import { showError, showSuccess, showAlert } from "../../utils/alerts";
+import PremiumRoomInvoice from "../../components/PremiumRoomInvoice";
 
 export default function StaffRoomBooking() {
   const [rooms, setRooms] = useState([]);

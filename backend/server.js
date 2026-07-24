@@ -36,6 +36,7 @@ app.use("/api/grc", require("./routes/grcRoutes"));
 
 // Error handling middleware
 app.use((err, req, res, next) => {
+  console.error(err);
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode).json({
     success: false,

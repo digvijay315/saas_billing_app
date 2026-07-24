@@ -3,8 +3,7 @@ const mongoose = require("mongoose");
 const grcCounterSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    default: "grcNo"
+    required: true
   },
   sequence_value: {
     type: Number,

@@ -18,10 +18,18 @@ export default function Navbar({ currentUser, onLogout, theme, toggleTheme, togg
           </button>
         )}
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate("/")}>
-          {/* Hotel Default Logo */}
-          <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
-            <Building2 className="w-5 h-5 text-amber-500" />
-          </div>
+          {/* Hotel Logo */}
+          {currentUser?.hotelLogo ? (
+            <img 
+              src={currentUser.hotelLogo} 
+              alt="Hotel Logo" 
+              className="w-10 h-10 rounded-xl object-contain border border-slate-700 shrink-0 bg-slate-800 p-1"
+            />
+          ) : (
+            <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
+              <Building2 className="w-5 h-5 text-amber-500" />
+            </div>
+          )}
           <div>
             <h1 className="text-xl font-black font-serif tracking-tight text-white leading-none uppercase">
               {currentUser?.hotelName || "Your Hotel Name"}
@@ -41,67 +49,87 @@ export default function Navbar({ currentUser, onLogout, theme, toggleTheme, togg
               <div className="w-8 h-8 rounded-lg bg-gold-700/20 border border-gold-500/30 flex items-center justify-center text-amber-500">
                 <User className="w-4 h-4" />
               </div>
-              <div className="text-left">
+              <div className="text-left flex flex-col">
                 <p className="text-sm font-semibold text-slate-200">{currentUser.name}</p>
-                <p className="text-[10px] text-amber-500 uppercase font-bold tracking-wider">
-                  {currentUser.role}
-                </p>
+                <div className="flex items-center gap-2">
+                  <p className="text-[10px] text-amber-500 uppercase font-bold tracking-wider">
+                    {currentUser.role}
+                  </p>
+                  {currentUser.role === "staff" && currentUser.subscriptionPlan && (
+                    <span className="text-[9px] bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700">
+                      {currentUser.subscriptionPlan === "free" ? "Free Plan (Unlimited)" : 
+                       currentUser.subscriptionPlan === "premium" && currentUser.subscriptionExpiresAt ? 
+                       `Premium (${Math.max(0, Math.ceil((new Date(currentUser.subscriptionExpiresAt) - new Date()) / (1000 * 60 * 60 * 24)))} days left)` : 
+                       "No Plan"}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           )}
 
           {currentUser && currentUser.role === "staff" && (
             <div className="flex items-center gap-2 bg-slate-900/60 border border-slate-800/80 p-1.5 rounded-xl mr-2">
-              <button
-                onClick={() => navigate("/staff")}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                  window.location.pathname === "/staff"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                Restaurant
-              </button>
-              <button
-                onClick={() => navigate("/staff/rooms")}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                  window.location.pathname === "/staff/rooms"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                Room Booking
-              </button>
-              <button
-                onClick={() => navigate("/staff/kot")}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                  window.location.pathname === "/staff/kot"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                KOT Billing
-              </button>
-              <button
-                onClick={() => navigate("/staff/advance-bookings")}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
-                  window.location.pathname === "/staff/advance-bookings"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                Advance Bookings
-              </button>
-              <button
-                onClick={() => navigate("/staff/grc")}
-                className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
-                  window.location.pathname === "/staff/grc"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
-                    : "text-slate-400 hover:text-slate-200"
-                }`}
-              >
-                Print GRC
-              </button>
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.restaurant) && (
+                <button
+                  onClick={() => navigate("/staff")}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                    window.location.pathname === "/staff"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  Restaurant
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.roomBooking) && (
+                <button
+                  onClick={() => navigate("/staff/rooms")}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                    window.location.pathname === "/staff/rooms"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  Room Booking
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.kot) && (
+                <button
+                  onClick={() => navigate("/staff/kot")}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                    window.location.pathname === "/staff/kot"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  KOT Billing
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.advanceBooking) && (
+                <button
+                  onClick={() => navigate("/staff/advance-bookings")}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all whitespace-nowrap ${
+                    window.location.pathname === "/staff/advance-bookings"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  Advance Bookings
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.grc) && (
+                <button
+                  onClick={() => navigate("/staff/grc")}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                    window.location.pathname === "/staff/grc"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30"
+                      : "text-slate-400 hover:text-slate-200"
+                  }`}
+                >
+                  Print GRC
+                </button>
+              )}
             </div>
           )}
 
@@ -141,72 +169,92 @@ export default function Navbar({ currentUser, onLogout, theme, toggleTheme, togg
             <div className="w-10 h-10 rounded-lg bg-gold-700/20 border border-gold-500/30 flex items-center justify-center text-amber-500 shrink-0">
               <User className="w-5 h-5" />
             </div>
-            <div className="text-left">
+            <div className="text-left flex flex-col">
               <p className="text-base font-semibold text-slate-200">{currentUser.name}</p>
-              <p className="text-[10px] text-amber-500 uppercase font-bold tracking-wider">
-                {currentUser.role}
-              </p>
+              <div className="flex items-center gap-2">
+                <p className="text-[10px] text-amber-500 uppercase font-bold tracking-wider">
+                  {currentUser.role}
+                </p>
+                {currentUser.role === "staff" && currentUser.subscriptionPlan && (
+                  <span className="text-[9px] bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded border border-slate-300 dark:border-slate-700">
+                    {currentUser.subscriptionPlan === "free" ? "Free Plan (Unlimited)" : 
+                     currentUser.subscriptionPlan === "premium" && currentUser.subscriptionExpiresAt ? 
+                     `Premium (${Math.max(0, Math.ceil((new Date(currentUser.subscriptionExpiresAt) - new Date()) / (1000 * 60 * 60 * 24)))} days left)` : 
+                     "No Plan"}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Staff Nav Links */}
           {currentUser.role === "staff" && (
             <div className="flex flex-col gap-2 mb-1 border-b border-slate-800/50 pb-4 mt-2">
-              <button
-                onClick={() => { navigate("/staff"); setIsStaffMenuOpen(false); }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                  window.location.pathname === "/staff"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
-                }`}
-              >
-                <Utensils className="w-5 h-5" />
-                Restaurant Billing
-              </button>
-              <button
-                onClick={() => { navigate("/staff/rooms"); setIsStaffMenuOpen(false); }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                  window.location.pathname === "/staff/rooms"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
-                }`}
-              >
-                <BedDouble className="w-5 h-5" />
-                Room Booking
-              </button>
-              <button
-                onClick={() => { navigate("/staff/kot"); setIsStaffMenuOpen(false); }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                  window.location.pathname === "/staff/kot"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
-                }`}
-              >
-                <Utensils className="w-5 h-5" />
-                KOT Billing
-              </button>
-              <button
-                onClick={() => { navigate("/staff/advance-bookings"); setIsStaffMenuOpen(false); }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                  window.location.pathname === "/staff/advance-bookings"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
-                }`}
-              >
-                <CalendarClock className="w-5 h-5" />
-                Advance Bookings
-              </button>
-              <button
-                onClick={() => { navigate("/staff/grc"); setIsStaffMenuOpen(false); }}
-                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
-                  window.location.pathname === "/staff/grc"
-                    ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
-                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
-                }`}
-              >
-                <FileText className="w-5 h-5" />
-                Print GRC
-              </button>
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.restaurant) && (
+                <button
+                  onClick={() => { navigate("/staff"); setIsStaffMenuOpen(false); }}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
+                    window.location.pathname === "/staff"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                  }`}
+                >
+                  <Utensils className="w-5 h-5" />
+                  Restaurant Billing
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.roomBooking) && (
+                <button
+                  onClick={() => { navigate("/staff/rooms"); setIsStaffMenuOpen(false); }}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
+                    window.location.pathname === "/staff/rooms"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                  }`}
+                >
+                  <BedDouble className="w-5 h-5" />
+                  Room Booking
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.kot) && (
+                <button
+                  onClick={() => { navigate("/staff/kot"); setIsStaffMenuOpen(false); }}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
+                    window.location.pathname === "/staff/kot"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                  }`}
+                >
+                  <Utensils className="w-5 h-5" />
+                  KOT Billing
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.advanceBooking) && (
+                <button
+                  onClick={() => { navigate("/staff/advance-bookings"); setIsStaffMenuOpen(false); }}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
+                    window.location.pathname === "/staff/advance-bookings"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                  }`}
+                >
+                  <CalendarClock className="w-5 h-5" />
+                  Advance Bookings
+                </button>
+              )}
+              {(!currentUser.staffPermissions || currentUser.staffPermissions.grc) && (
+                <button
+                  onClick={() => { navigate("/staff/grc"); setIsStaffMenuOpen(false); }}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-left ${
+                    window.location.pathname === "/staff/grc"
+                      ? "bg-amber-500/20 text-amber-400 border border-amber-500/30 font-semibold"
+                      : "text-slate-400 hover:text-slate-200 hover:bg-slate-900"
+                  }`}
+                >
+                  <FileText className="w-5 h-5" />
+                  Print GRC
+                </button>
+              )}
             </div>
           )}
 
