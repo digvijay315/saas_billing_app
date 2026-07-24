@@ -7,9 +7,9 @@ const Pricing = ({ onOpenRegister }) => {
 
   const plans = [
     {
-      name: "Starter",
+      name: "Free Tier",
       desc: "Perfect for small boutique hotels & guesthouses.",
-      price: "₹2,499",
+      price: "Free",
       period: "/month",
       features: [
         "Up to 20 Rooms",
@@ -23,7 +23,7 @@ const Pricing = ({ onOpenRegister }) => {
     {
       name: "Professional",
       desc: "Ideal for mid-sized hotels with a restaurant.",
-      price: "₹5,999",
+      price: "₹1,499",
       period: "/month",
       features: [
         "Up to 100 Rooms",
