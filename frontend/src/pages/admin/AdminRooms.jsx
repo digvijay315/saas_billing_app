@@ -143,12 +143,12 @@ export default function AdminRooms() {
           <p className="text-slate-400 text-sm">Add, edit, or remove rooms and pricing</p>
         </div>
         <div className="flex gap-2">
-          <button
+          {/* <button
             onClick={handleSeedRooms}
             className="px-4 py-2 bg-slate-800 text-amber-500 rounded-xl hover:bg-slate-700 transition-colors border border-amber-500/20"
           >
             Seed Defaults
-          </button>
+          </button> */}
           <button
             onClick={openAddModal}
             className="flex items-center gap-2 px-4 py-2 bg-amber-500 text-slate-900 font-semibold rounded-xl hover:bg-amber-400 transition-colors"

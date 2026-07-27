@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Hotel = require("../models/Hotel");
+const Notification = require("../models/Notification");
 
 // Generate JWT token
 const generateToken = (id) => {
@@ -48,6 +49,14 @@ const registerHotel = async (req, res) => {
 
     hotel.adminId = adminUser._id;
     await hotel.save();
+
+    // Create Admin Notification
+    await Notification.create({
+      title: 'New Hotel Registered',
+      message: `${hotelName} has just registered as a new property.`,
+      type: 'REGISTRATION',
+      hotelId: hotel._id
+    });
 
     res.status(201).json({
       success: true,

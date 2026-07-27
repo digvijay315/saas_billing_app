@@ -37,7 +37,7 @@ const About = () => {
             transition={{ delay: 0.2 }}
             className="text-xl text-slate-700 max-w-3xl mx-auto leading-relaxed font-medium"
           >
-            NexaDesk was founded on a simple premise: hoteliers should spend their time taking care of guests, not wrestling with clunky software.
+            Secure Billing Pro was founded on a simple premise: hoteliers should spend their time taking care of guests, not wrestling with clunky software.
           </motion.p>
         </div>
       </section>
@@ -82,13 +82,13 @@ const About = () => {
       <section className="py-32 bg-white relative z-10 overflow-hidden">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-blue-50 rounded-full blur-3xl -z-10"></div>
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-12">The NexaDesk Journey</h2>
+          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-12">The Secure Billing Pro Journey</h2>
           <div className="space-y-12">
             {[
               { year: '2023', title: 'The Lightbulb Moment', desc: 'After witnessing the chaos of a busy hotel lobby using outdated systems, our founders set out to build a modern alternative.' },
-              { year: '2024', title: 'The First Property', desc: 'NexaDesk v1.0 was deployed at a 50-room boutique hotel, completely transforming their front desk operations.' },
+              { year: '2024', title: 'The First Property', desc: 'Secure Billing Pro v1.0 was deployed at a 50-room boutique hotel, completely transforming their front desk operations.' },
               { year: '2025', title: 'Scaling Up', desc: 'We introduced the Restaurant POS module and scaled to over 1,000 properties nationwide.' },
-              { year: '2026', title: 'The Future', desc: 'Today, NexaDesk is the operating system for thousands of modern hoteliers globally, and we are just getting started.' }
+              { year: '2026', title: 'The Future', desc: 'Today, Secure Billing Pro is the operating system for thousands of modern hoteliers globally, and we are just getting started.' }
             ].map((step, i) => (
               <motion.div 
                 key={i}

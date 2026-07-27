@@ -25,7 +25,7 @@ const Contact = () => {
               transition={{ delay: 0.1 }}
               className="text-xl text-slate-600 font-medium"
             >
-              Whether you need a demo, have a technical question, or just want to say hi—our team at NexaDesk is ready to help you out.
+              Whether you need a demo, have a technical question, or just want to say hi—our team at Secure Billing Pro is ready to help you out.
             </motion.p>
           </div>
 

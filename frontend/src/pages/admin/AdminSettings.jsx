@@ -38,10 +38,9 @@ export default function AdminSettings() {
         icon: "error", 
         title: "Oops...", 
         text: "New passwords do not match!",
-        background: '#0f172a',
-        color: '#f8fafc',
-        customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded' },
-        buttonsStyling: false
+        background: '#ffffff',
+        color: '#1e293b',
+        customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded border-none shadow' },
       });
       return;
     }
@@ -52,10 +51,9 @@ export default function AdminSettings() {
           icon: "success", 
           title: "Success", 
           text: "Password updated successfully!",
-          background: '#0f172a',
-          color: '#f8fafc',
-          customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded' },
-          buttonsStyling: false
+          background: '#ffffff',
+          color: '#1e293b',
+          customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded border-none shadow' },
         });
         setCurrentPassword("");
         setNewPassword("");
@@ -66,10 +64,9 @@ export default function AdminSettings() {
         icon: "error",
         title: "Failed",
         text: err.response?.data?.message || "Failed to update password",
-        background: '#0f172a',
-        color: '#f8fafc',
-        customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded' },
-        buttonsStyling: false
+        background: '#ffffff',
+        color: '#1e293b',
+        customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded border-none shadow' },
       });
     }
   };
@@ -86,10 +83,9 @@ export default function AdminSettings() {
           icon: "success", 
           title: "Success", 
           text: "Staff permissions updated!",
-          background: '#0f172a',
-          color: '#f8fafc',
-          customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded' },
-          buttonsStyling: false
+          background: '#ffffff',
+          color: '#1e293b',
+          customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded border-none shadow' },
         });
         // Update local storage
         if (currentUser) {
@@ -105,10 +101,9 @@ export default function AdminSettings() {
         icon: "error",
         title: "Failed",
         text: err.response?.data?.message || "Failed to update permissions",
-        background: '#0f172a',
-        color: '#f8fafc',
-        customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded' },
-        buttonsStyling: false
+        background: '#ffffff',
+        color: '#1e293b',
+        customClass: { confirmButton: 'bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded border-none shadow' },
       });
     }
   };

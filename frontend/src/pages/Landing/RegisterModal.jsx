@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Building2, Users, CheckCircle2, X } from 'lucide-react';
+import { Building2, Users, CheckCircle2, X, Eye, EyeOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import api from '../../api';
 
@@ -24,6 +24,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [successData, setSuccessData] = useState(null);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -106,7 +107,7 @@ const RegisterModal = ({ isOpen, onClose }) => {
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-2">Registration Successful!</h3>
-                  <p className="text-slate-600 mb-8">Welcome to NexaDesk, <span className="font-semibold text-slate-900">{successData.hotelName}</span>.</p>
+                  <p className="text-slate-600 mb-8">Welcome to Secure Billing Pro, <span className="font-semibold text-slate-900">{successData.hotelName}</span>.</p>
                   
                   <div className="bg-slate-50 rounded-xl p-6 mb-8 max-w-md mx-auto text-left border border-slate-200 shadow-sm">
                     <p className="text-sm text-slate-600 mb-4 font-medium">Please save these credentials to login to your admin panel:</p>
@@ -172,7 +173,25 @@ const RegisterModal = ({ isOpen, onClose }) => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <input name="adminName" placeholder="Admin Full Name" required onChange={handleInputChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" />
                       <input name="adminEmail" type="email" placeholder="Admin Login Email" required onChange={handleInputChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" />
-                      <input name="adminPassword" type="password" placeholder="Create Password" required onChange={handleInputChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" />
+                      
+                      <div className="relative w-full">
+                        <input 
+                          name="adminPassword" 
+                          type={showPassword ? "text" : "password"} 
+                          placeholder="Create Password" 
+                          required 
+                          onChange={handleInputChange} 
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-12 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" 
+                        />
+                        <button 
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 transition-colors"
+                        >
+                          {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        </button>
+                      </div>
+
                       <input name="adminMobile" placeholder="Admin Mobile" required onChange={handleInputChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" />
                       <input name="adminAge" type="number" placeholder="Age" required onChange={handleInputChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" />
                       <input name="adminAddress" placeholder="Admin Address" required onChange={handleInputChange} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-900 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all font-medium" />

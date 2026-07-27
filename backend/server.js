@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Default route
 app.get("/", (req, res) => {
-  res.send("Hotel Restaurant Billing API is running...");
+  res.send("Secure Billing Pro API is running...");
 });
 
 // Routes
@@ -33,7 +33,8 @@ app.use("/api/room-bookings", require("./routes/roomBookingRoutes"));
 app.use("/api/tables", require("./routes/tableRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/grc", require("./routes/grcRoutes"));
-
+app.use("/api/superadmin", require("./routes/superAdminRoutes"));
+app.use("/api/payment", require("./routes/paymentRoutes"));
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err);

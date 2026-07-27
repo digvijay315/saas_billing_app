@@ -35,7 +35,7 @@ const LandingLayout = ({ children }) => {
               <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-105 transition-transform">
                 <Layers className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-black text-slate-900 tracking-tight">NexaDesk</span>
+              <span className="text-2xl font-black text-slate-900 tracking-tight">SecureBillPro</span>
             </motion.div>
           </Link>
           
@@ -150,7 +150,7 @@ const LandingLayout = ({ children }) => {
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-400 to-blue-500 flex items-center justify-center">
                   <Layers className="w-5 h-5 text-slate-900" />
                 </div>
-                <span className="text-2xl font-black text-white tracking-tight">NexaDesk</span>
+                <span className="text-2xl font-black text-white tracking-tight">SecureBillPro</span>
               </div>
               <p className="text-sm text-slate-400 leading-relaxed">
                 The modern operating system for ambitious hoteliers. Streamline operations, boost revenue, and delight guests with our all-in-one platform.
@@ -210,7 +210,7 @@ const LandingLayout = ({ children }) => {
           
           <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm">
-              &copy; {new Date().getFullYear()} NexaDesk Technologies. All rights reserved.
+              &copy; {new Date().getFullYear()} Secure Billing Pro Technologies. All rights reserved.
             </p>
             <div className="flex gap-6 text-sm">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>

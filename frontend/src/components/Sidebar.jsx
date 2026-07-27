@@ -1,62 +1,97 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LayoutDashboard, Users, UtensilsCrossed, FileText, BedDouble, BookOpen, Settings, CreditCard } from "lucide-react";
 
 export default function Sidebar({ isOpen, closeSidebar }) {
   const location = useLocation();
+  const [permissions, setPermissions] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = () => {
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user && user.staffPermissions) {
+        setPermissions(user.staffPermissions);
+      } else {
+        // default all true if not set
+        setPermissions({
+          restaurant: true,
+          roomBooking: true,
+          kot: true,
+          advanceBooking: true,
+          grc: true
+        });
+      }
+    };
+    
+    fetchUser();
+    window.addEventListener("user-updated", fetchUser);
+    return () => window.removeEventListener("user-updated", fetchUser);
+  }, []);
 
   const menuItems = [
     {
       name: "Dashboard Reports",
       path: "/admin",
       icon: LayoutDashboard,
+      show: true,
     },
     {
       name: "Restaurant Billing",
       path: "/admin/reports",
       icon: FileText,
+      show: !permissions || permissions.restaurant,
     },
     {
       name: "Room Bookings",
       path: "/admin/room-reports",
       icon: BookOpen,
+      show: !permissions || permissions.roomBooking,
     },
     {
       name: "Advance Bookings",
       path: "/admin/advance-bookings",
       icon: BookOpen,
+      show: !permissions || permissions.advanceBooking,
     },
     {
       name: "Manage Staff",
       path: "/admin/staff",
       icon: Users,
+      show: true,
     },
     {
       name: "Manage Dishes",
       path: "/admin/dishes",
       icon: UtensilsCrossed,
+      show: !permissions || permissions.restaurant,
     },
     {
       name: "Manage Rooms",
       path: "/admin/rooms",
       icon: BedDouble,
+      show: !permissions || permissions.roomBooking,
     },
     {
       name: "Manage Tables",
       path: "/admin/tables",
       icon: UtensilsCrossed,
+      show: !permissions || permissions.restaurant,
     },
     {
       name: "Settings",
       path: "/admin/settings",
       icon: Settings,
+      show: true,
     },
     {
       name: "Subscription",
       path: "/admin/billing",
       icon: CreditCard,
+      show: true,
     },
   ];
+
+  const visibleMenuItems = menuItems.filter(item => item.show);
 
   return (
     <>
@@ -80,7 +115,7 @@ export default function Sidebar({ isOpen, closeSidebar }) {
       </div>
 
       <div className="flex flex-col gap-1.5">
-        {menuItems.map((item) => {
+        {visibleMenuItems.map((item) => {
           const Icon = item.icon;
           const isActive = location.pathname === item.path;
 

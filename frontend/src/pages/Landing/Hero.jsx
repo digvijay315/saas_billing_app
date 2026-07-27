@@ -49,7 +49,7 @@ const Hero = ({ onOpenRegister }) => {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
               </span>
-              <span className="text-sm font-bold text-slate-800 tracking-wide uppercase">NexaDesk 2.0 is now live</span>
+              <span className="text-sm font-bold text-slate-800 tracking-wide uppercase">Secure Billing Pro is now live</span>
             </motion.div>
             
             <motion.h1 
@@ -218,7 +218,7 @@ const Hero = ({ onOpenRegister }) => {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-4xl md:text-5xl font-display font-black text-slate-900 mb-6">Built for scale. Designed for speed.</h2>
-            <p className="text-xl text-slate-600 font-medium">Why the world's best hotels are switching to NexaDesk.</p>
+            <p className="text-xl text-slate-600 font-medium">Why the world's best hotels are switching to Secure Billing Pro.</p>
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
@@ -273,7 +273,7 @@ const Hero = ({ onOpenRegister }) => {
                 {[1,2,3,4,5].map(star => <motion.div key={star} initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.8 }} transition={{ delay: 0.5 + (star * 0.2), duration: 0.6 }}><Star className="w-5 h-5 fill-current" /></motion.div>)}
               </div>
               <p className="text-xl leading-relaxed font-medium text-slate-200 mb-8">
-                "Switching to NexaDesk was the best decision we made for our 120-room property. The Restaurant POS integration with room billing is completely flawless. It saved us countless hours of reconciliation."
+                "Switching to Secure Billing Pro was the best decision we made for our 120-room property. The Restaurant POS integration with room billing is completely flawless. It saved us countless hours of reconciliation."
               </p>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center font-bold text-xl">SJ</div>
