@@ -44,7 +44,7 @@ const Contact = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">Chat with Sales</h3>
                 <p className="text-slate-600 font-medium mb-4">Speak directly with our experts to find the right plan for your hotel.</p>
-                <a href="mailto:sales@nexadesk.com" className="text-lg font-bold text-indigo-600 hover:text-indigo-700">sales@nexadesk.com</a>
+                <a href="mailto:info.secureweb@gmail.com" className="text-lg font-bold text-indigo-600 hover:text-indigo-700">info.secureweb@gmail.com</a>
               </div>
 
               <div className="bg-white p-8 rounded-3xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-fuchsia-500/10 transition-shadow">
@@ -53,7 +53,7 @@ const Contact = () => {
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-2">Call Support</h3>
                 <p className="text-slate-600 font-medium mb-4">Current customers can reach our technical support team 24/7.</p>
-                <a href="tel:+919876543210" className="text-lg font-bold text-fuchsia-600 hover:text-fuchsia-700">+91 98765 43210</a>
+                <a href="tel:+917004451454" className="text-lg font-bold text-fuchsia-600 hover:text-fuchsia-700">70044 51454</a>
               </div>
 
               <div className="bg-slate-900 p-8 rounded-3xl text-white shadow-xl">

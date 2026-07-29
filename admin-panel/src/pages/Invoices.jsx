@@ -54,17 +54,17 @@ export default function Invoices() {
       </div>
 
       {/* Main Content */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="p-4 sm:p-6 border-b border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="relative w-full sm:max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
+      <div className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50 overflow-hidden">
+        <div className="p-6 sm:p-8 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50/30 gap-4">
+          <div className="relative w-full max-w-md">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input 
               type="text" 
               placeholder="Search by Txn ID or Hotel..." 
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all outline-none"
+              className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium shadow-sm"
             />
           </div>
-          <div className="text-sm font-semibold text-slate-500 bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
+          <div className="text-sm font-bold text-slate-500 bg-white px-5 py-3 rounded-2xl border border-slate-200 shadow-sm">
             Total Transactions: <span className="text-blue-600">{totalCount}</span>
           </div>
         </div>
@@ -73,12 +73,12 @@ export default function Invoices() {
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
               <tr className="bg-slate-50/50 border-b border-slate-100">
-                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Transaction ID</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Hotel Details</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Plan</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Amount</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase tracking-wider">Date</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Transaction ID</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Hotel Details</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Plan</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Amount</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -107,39 +107,39 @@ export default function Invoices() {
                     transition={{ delay: idx * 0.05 }}
                     key={invoice._id} 
                     onClick={() => setSelectedInvoice(invoice)}
-                    className="hover:bg-slate-50/50 transition-colors cursor-pointer"
+                    className="hover:bg-slate-50/80 transition-colors cursor-pointer group"
                   >
-                    <td className="px-6 py-4">
-                      <span className="font-mono text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-1 rounded border border-slate-200">
+                    <td className="px-6 py-5">
+                      <span className="font-mono text-xs font-bold text-slate-500 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200">
                         {invoice.txnid}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="font-semibold text-slate-800">{invoice.hotelId?.name || invoice.customerName || 'Unknown Hotel'}</div>
-                      <div className="text-xs text-slate-500">{invoice.hotelId?.email || invoice.customerEmail}</div>
+                    <td className="px-6 py-5">
+                      <div className="font-bold text-slate-900">{invoice.hotelId?.name || invoice.customerName || 'Unknown Hotel'}</div>
+                      <div className="text-xs text-slate-500 font-medium mt-0.5">{invoice.hotelId?.email || invoice.customerEmail}</div>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-5">
                       <span className="capitalize font-bold text-blue-700 bg-blue-50 px-3 py-1 rounded-full border border-blue-100 text-xs shadow-sm">
                         {invoice.planName}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className="font-bold text-slate-800">₹{invoice.amount?.toLocaleString('en-IN')}</span>
+                    <td className="px-6 py-5">
+                      <span className="font-black text-slate-900 text-lg">₹{invoice.amount?.toLocaleString('en-IN')}</span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-5">
                       {invoice.status === 'success' ? (
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Success
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-200">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-red-50 text-red-700 border border-red-200 shadow-sm">
                           <span className="w-1.5 h-1.5 rounded-full bg-red-500"></span> Failed
                         </span>
                       )}
                     </td>
-                    <td className="px-6 py-4">
-                      <div className="text-sm font-medium text-slate-700">{new Date(invoice.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
-                      <div className="text-xs text-slate-400">{new Date(invoice.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</div>
+                    <td className="px-6 py-5">
+                      <div className="text-sm font-bold text-slate-700">{new Date(invoice.createdAt).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</div>
+                      <div className="text-xs font-medium text-slate-400 mt-0.5">{new Date(invoice.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</div>
                     </td>
                   </motion.tr>
                 ))
@@ -214,7 +214,7 @@ export default function Invoices() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-2xl shadow-2xl z-50 overflow-hidden flex flex-col max-h-[90vh]"
+              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] z-50 overflow-hidden flex flex-col max-h-[90vh] border border-slate-100"
             >
               <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50">
                 <div className="flex items-center gap-3">

@@ -12,4 +12,42 @@ const api = axios.create({
   },
 });
 
+let activeRequests = 0;
+
+const handleRequestStart = (config) => {
+  if (!config.headers?.hideLoader) {
+    activeRequests++;
+    if (activeRequests === 1) {
+      window.dispatchEvent(new Event('show-loader'));
+    }
+  }
+  return config;
+};
+
+const handleRequestEnd = () => {
+  activeRequests = Math.max(0, activeRequests - 1);
+  if (activeRequests === 0) {
+    window.dispatchEvent(new Event('hide-loader'));
+  }
+};
+
+api.interceptors.request.use(
+  handleRequestStart,
+  (error) => {
+    if (!error.config?.headers?.hideLoader) handleRequestEnd();
+    return Promise.reject(error);
+  }
+);
+
+api.interceptors.response.use(
+  (response) => {
+    if (!response.config?.headers?.hideLoader) handleRequestEnd();
+    return response;
+  },
+  (error) => {
+    if (!error.config?.headers?.hideLoader) handleRequestEnd();
+    return Promise.reject(error);
+  }
+);
+
 export default api;

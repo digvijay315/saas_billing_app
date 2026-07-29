@@ -193,15 +193,15 @@ const LandingLayout = ({ children }) => {
               <ul className="space-y-4">
                 <li className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
-                  <span className="text-sm">123 Tech Park, Cyber City<br/>Bengaluru, Karnataka 560001</span>
+                  <span className="text-sm">new grant estate lal pokhra dumka<br/>jharkhand 814101</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Phone className="w-5 h-5 text-cyan-500 shrink-0" />
-                  <span className="text-sm">+91 98765 43210</span>
+                  <span className="text-sm">70044 51454</span>
                 </li>
                 <li className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-cyan-500 shrink-0" />
-                  <span className="text-sm">hello@nexadesk.com</span>
+                  <span className="text-sm">info.secureweb@gmail.com</span>
                 </li>
               </ul>
             </div>

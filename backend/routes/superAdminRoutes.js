@@ -3,6 +3,67 @@ const router = express.Router();
 const Hotel = require("../models/Hotel");
 const Notification = require("../models/Notification");
 const SubscriptionInvoice = require("../models/SubscriptionInvoice");
+const User = require("../models/User");
+
+// @desc    Get dashboard statistics
+// @route   GET /api/superadmin/dashboard-stats
+// @access  Public
+router.get("/dashboard-stats", async (req, res) => {
+  try {
+    const totalHotels = await Hotel.countDocuments({});
+    const activeSubscriptions = await Hotel.countDocuments({ subscriptionStatus: "active" });
+    const totalUsers = await User.countDocuments({});
+    
+    const revenueAggregation = await SubscriptionInvoice.aggregate([
+      { $match: { status: 'success' } },
+      { $group: { _id: null, total: { $sum: '$amount' } } }
+    ]);
+    const totalRevenue = revenueAggregation.length > 0 ? revenueAggregation[0].total : 0;
+
+    const recentHotels = await Hotel.find({})
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .select('name subscriptionPlan createdAt');
+
+    const planDistribution = await Hotel.aggregate([
+      { $group: { _id: { $ifNull: ["$subscriptionPlan", "free"] }, value: { $sum: 1 } } },
+      { $project: { name: "$_id", value: 1, _id: 0 } }
+    ]);
+
+    const sixMonthsAgo = new Date();
+    sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+
+    const revenueByMonth = await SubscriptionInvoice.aggregate([
+      { $match: { status: 'success', createdAt: { $gte: sixMonthsAgo } } },
+      {
+        $group: {
+          _id: { year: { $year: "$createdAt" }, month: { $month: "$createdAt" } },
+          revenue: { $sum: "$amount" }
+        }
+      },
+      { $sort: { "_id.year": 1, "_id.month": 1 } }
+    ]).then(results => results.map(r => {
+      const date = new Date(r._id.year, r._id.month - 1, 1);
+      return {
+        name: date.toLocaleString('default', { month: 'short' }),
+        revenue: r.revenue
+      };
+    }));
+
+    res.json({
+      totalHotels,
+      activeSubscriptions,
+      totalUsers,
+      totalRevenue,
+      recentHotels,
+      planDistribution,
+      revenueByMonth
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
+});
 
 // @desc    Get all hotels
 // @route   GET /api/superadmin/hotels

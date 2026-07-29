@@ -143,26 +143,33 @@ export default function Customers() {
     <div className="pb-8">
 
 
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-black text-slate-800 tracking-tight">Customers</h1>
+          <p className="text-sm text-slate-500 mt-1">Manage all registered hotels and their subscriptions.</p>
+        </div>
+      </div>
+
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden"
+        className="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100/50 overflow-hidden"
       >
-        <div className="p-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-          <div className="relative w-full max-w-sm">
-            <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
+        <div className="p-6 sm:p-8 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50/30 gap-4">
+          <div className="relative w-full max-w-md">
+            <Search className="w-5 h-5 absolute left-4 top-3.5 text-slate-400" />
             <input 
               type="text" 
               placeholder="Search hotels by name or email..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition font-medium"
+              className="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 transition-all font-medium shadow-sm"
             />
           </div>
         </div>
         <div className="overflow-x-auto custom-scrollbar">
           <table className="w-full text-left whitespace-nowrap">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-slate-50/50">
               <tr>
                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Hotel Details</th>
                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</th>
@@ -190,13 +197,13 @@ export default function Customers() {
                     onClick={() => handleView(hotel)}
                     className={`hover:bg-slate-50/80 transition-colors group cursor-pointer ${!hotel.isActive ? 'bg-red-50/20' : ''}`}
                   >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center shrink-0 border border-blue-200 overflow-hidden">
+                    <td className="px-6 py-5 sm:px-8">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-50 to-blue-50 flex items-center justify-center shrink-0 border border-blue-100 overflow-hidden shadow-sm shadow-blue-500/10">
                           {hotel.logo ? (
                             <img src={hotel.logo} alt={hotel.name} className="w-full h-full object-cover" />
                           ) : (
-                            <span className="text-blue-700 font-bold">{hotel.name.charAt(0)}</span>
+                            <span className="text-blue-600 font-black text-lg">{hotel.name.charAt(0)}</span>
                           )}
                         </div>
                         <div>
@@ -225,17 +232,17 @@ export default function Customers() {
                         {hotel.isActive ? 'Active' : 'Blocked'}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-right flex items-center justify-end gap-1" onClick={(e) => e.stopPropagation()}>
-                      <button onClick={() => handleView(hotel)} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent hover:border-blue-100" title="View Details">
-                        <Eye className="w-4 h-4" />
+                    <td className="px-6 py-5 sm:px-8 text-right flex items-center justify-end gap-2" onClick={(e) => e.stopPropagation()}>
+                      <button onClick={() => handleView(hotel)} className="p-2.5 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-xl transition-all border border-transparent hover:border-blue-100 hover:shadow-sm" title="View Details">
+                        <Eye className="w-5 h-5" />
                       </button>
                       
-                      <button onClick={() => handleToggleSubscription(hotel)} className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors border border-transparent hover:border-indigo-100" title="Toggle Subscription">
-                        <Power className="w-4 h-4" />
+                      <button onClick={() => handleToggleSubscription(hotel)} className="p-2.5 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all border border-transparent hover:border-indigo-100 hover:shadow-sm" title="Toggle Subscription">
+                        <Power className="w-5 h-5" />
                       </button>
                       
-                      <button onClick={() => handleDelete(hotel)} className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors border border-transparent hover:border-red-100" title="Delete Hotel">
-                        <Trash2 className="w-4 h-4" />
+                      <button onClick={() => handleDelete(hotel)} className="p-2.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-xl transition-all border border-transparent hover:border-red-100 hover:shadow-sm" title="Delete Hotel">
+                        <Trash2 className="w-5 h-5" />
                       </button>
                     </td>
                   </motion.tr>

@@ -20,7 +20,7 @@ export default function AdminLayout() {
 
   const fetchNotifications = async () => {
     try {
-      const res = await api.get('/superadmin/notifications');
+      const res = await api.get('/superadmin/notifications', { headers: { hideLoader: true } });
       setNotifications(res.data);
     } catch (err) {
       console.error('Failed to fetch notifications:', err);
@@ -30,13 +30,15 @@ export default function AdminLayout() {
   const handleReadNotification = async (id) => {
     try {
       await api.put(`/superadmin/notifications/${id}/read`);
-      setNotifications(notifications.map(n => n._id === id ? { ...n, isRead: true } : n));
+      if (Array.isArray(notifications)) {
+        setNotifications(notifications.map(n => n._id === id ? { ...n, isRead: true } : n));
+      }
     } catch (err) {
       console.error(err);
     }
   };
 
-  const unreadCount = notifications.filter(n => !n.isRead).length;
+  const unreadCount = Array.isArray(notifications) ? notifications.filter(n => !n.isRead).length : 0;
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -57,9 +59,9 @@ export default function AdminLayout() {
 
   const SidebarContent = () => (
     <>
-      <div className={`p-5 flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} border-b border-slate-100`}>
+      <div className={`p-5 flex items-center ${isCollapsed ? 'justify-center' : 'justify-between'} border-b border-white/10`}>
         <div className="flex items-center gap-3 overflow-hidden">
-          <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-2 rounded-xl shadow-md shadow-blue-500/20 shrink-0">
+          <div className="bg-[#3c4b64] border border-white/20 p-2 rounded-xl shadow-lg shrink-0">
             <Building2 className="w-6 h-6 text-white" />
           </div>
           {!isCollapsed && (
@@ -67,9 +69,9 @@ export default function AdminLayout() {
               initial={{ opacity: 0, w: 0 }}
               animate={{ opacity: 1, w: 'auto' }}
               exit={{ opacity: 0, w: 0 }}
-              className="text-xl font-extrabold text-slate-900 tracking-tight whitespace-nowrap"
+              className="text-xl font-black text-white tracking-tight whitespace-nowrap"
             >
-              SecureBill<span className="text-blue-600">Pro</span>
+              SecureBill<span className="text-blue-400">Pro</span>
             </motion.h1>
           )}
         </div>
@@ -81,29 +83,26 @@ export default function AdminLayout() {
             key={item.path}
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center gap-3 p-3 rounded-xl transition-all duration-200 group ${
+              `flex items-center gap-3 p-3 rounded-xl transition-all duration-300 group ${
                 isActive 
-                  ? 'bg-blue-50 text-blue-700 font-semibold shadow-sm border border-blue-100/50' 
-                  : 'text-slate-500 hover:bg-slate-50 hover:text-blue-600 font-medium'
+                  ? 'bg-white/10 text-white font-bold shadow-[inset_4px_0_0_#3b82f6]' 
+                  : 'text-slate-300 hover:bg-white/5 hover:text-white font-medium'
               } ${isCollapsed ? 'justify-center' : ''}`
             }
             title={isCollapsed ? item.name : ''}
           >
-            <div className={`relative ${window.location.pathname.includes(item.path) ? 'text-blue-600' : ''}`}>
+            <div className={`relative ${window.location.pathname.includes(item.path) ? 'text-blue-400 drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]' : 'text-slate-400 group-hover:text-white'}`}>
               {item.icon}
-              {window.location.pathname.includes(item.path) && (
-                <span className="absolute -left-3 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-blue-600 rounded-r-md"></span>
-              )}
             </div>
             {!isCollapsed && <span className="whitespace-nowrap">{item.name}</span>}
           </NavLink>
         ))}
       </nav>
 
-      <div className="p-4 border-t border-slate-100">
+      <div className="p-4 border-t border-white/10">
         <button
           onClick={handleLogout}
-          className={`flex items-center gap-3 w-full p-3 text-slate-500 hover:bg-red-50 hover:text-red-600 font-medium rounded-xl transition-colors group ${isCollapsed ? 'justify-center' : ''}`}
+          className={`flex items-center gap-3 w-full p-3 text-slate-300 hover:bg-red-500/20 hover:text-red-400 font-medium rounded-xl transition-all group ${isCollapsed ? 'justify-center' : ''}`}
           title={isCollapsed ? "Logout" : ""}
         >
           <LogOut className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
@@ -114,7 +113,7 @@ export default function AdminLayout() {
   );
 
   return (
-    <div className="flex h-screen bg-[#F8FAFC] font-sans overflow-hidden">
+    <div className="flex h-screen bg-[#F4F7FA] font-sans overflow-hidden">
       
       {/* Mobile Sidebar Overlay */}
       <AnimatePresence>
@@ -127,10 +126,10 @@ export default function AdminLayout() {
             />
             <motion.aside
               initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} transition={{ type: 'spring', bounce: 0, duration: 0.4 }}
-              className="fixed top-0 left-0 h-full w-72 bg-white border-r border-slate-200 z-50 flex flex-col shadow-2xl lg:hidden"
+              className="fixed top-0 left-0 h-full w-64 bg-[#3c4b64] border-r border-black/10 z-50 flex flex-col shadow-2xl lg:hidden"
             >
-              <div className="absolute top-4 right-4">
-                <button onClick={() => setIsMobileOpen(false)} className="p-2 text-slate-400 hover:text-slate-700 bg-slate-100 rounded-lg">
+              <div className="absolute top-4 right-4 z-50">
+                <button onClick={() => setIsMobileOpen(false)} className="p-2 text-slate-300 hover:text-white bg-black/20 rounded-lg">
                   <X className="w-5 h-5" />
                 </button>
               </div>
@@ -141,10 +140,10 @@ export default function AdminLayout() {
       </AnimatePresence>
 
       {/* Desktop Sidebar */}
-      <aside className={`hidden lg:flex flex-col bg-white border-r border-slate-200 z-30 transition-all duration-300 relative shadow-sm ${isCollapsed ? 'w-24' : 'w-72'}`}>
+      <aside className={`hidden lg:flex flex-col bg-[#3c4b64] border-r border-black/10 z-30 transition-all duration-300 relative shadow-2xl ${isCollapsed ? 'w-20' : 'w-64'}`}>
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="absolute -right-4 top-8 bg-white border border-slate-200 text-slate-400 p-1.5 rounded-full hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200 transition-colors z-40 shadow-sm"
+          className="absolute -right-4 top-8 bg-[#2a3648] border border-black/20 text-white p-1.5 rounded-full hover:bg-[#1f2735] hover:scale-110 transition-all z-40 shadow-lg"
         >
           {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
         </button>
@@ -152,17 +151,21 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
+      <main className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+        {/* Background ambient glow */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-400/5 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-indigo-400/5 rounded-full blur-[100px] pointer-events-none mix-blend-multiply"></div>
+
         {/* Header */}
-        <header className="bg-white/80 backdrop-blur-md border-b border-slate-200 h-20 flex items-center justify-between px-4 sm:px-8 z-20 shrink-0">
+        <header className="bg-white/60 backdrop-blur-xl border-b border-white shadow-[0_4px_30px_rgb(0,0,0,0.02)] h-20 flex items-center justify-between px-4 sm:px-8 z-20 shrink-0 sticky top-0">
           <div className="flex items-center gap-4">
             <button 
               onClick={() => setIsMobileOpen(true)}
-              className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+              className="lg:hidden p-2 text-slate-600 hover:bg-white/80 rounded-lg transition-colors shadow-sm"
             >
               <Menu className="w-6 h-6" />
             </button>
-            <h2 className="text-xl font-bold text-slate-800 hidden sm:block capitalize">
+            <h2 className="text-xl font-black text-slate-800 hidden sm:block capitalize tracking-tight">
               {location.pathname.substring(1) || 'Dashboard'}
             </h2>
           </div>
